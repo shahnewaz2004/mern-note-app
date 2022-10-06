@@ -1,14 +1,14 @@
-import React, { useState, useContext } from 'react';
-import { Authcontext } from '../../Context/Authcontext';
+import React, { useState} from 'react';
 import {HiUser, HiLockClosed} from 'react-icons/hi';
 import {MdEmail} from 'react-icons/md';
 import { Link, useNavigate } from 'react-router-dom';
+import { useCheckLogin } from '../checklogin';
 import axios from 'axios';
 
 
 function Signup() {
 
-    const {setUser} = useContext(Authcontext);
+    useCheckLogin();
     const navigate = useNavigate();
 
     const [info, setInfo] = useState({
@@ -42,7 +42,6 @@ function Signup() {
             withCredentials: true,
             data: data
         }).then(res => {
-            setUser(res.data);
             setInfo({loading: false, error: '', success: 'Account created. Redirecting to dashboard'});
             setTimeout(() => navigate('/dashboard'), 1000);
 
